@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace UDPClient
 {
@@ -27,35 +24,15 @@ namespace UDPClient
             IPAddress ipAddress = ipHostInfo.AddressList[3];
             IPEndPoint remoteEP = new IPEndPoint(ipAddress, 1339);
 
-            // Create a TCP/IP  socket.
+            // Create a UDP socket.
             Socket sender = new Socket(AddressFamily.InterNetwork,
                 SocketType.Dgram, ProtocolType.Udp);
             
-            //NO REMOTE ENDPOINT....
-            //sender.Connect(remoteEP); <-- no connection - UDP
-    
-
-
             byte[] bytes = new byte[1024];
             // Encode the data string into a byte array.
             byte[] msg = Encoding.UTF8.GetBytes(message);
             // Send the data through the socket.
             int bytesSent = sender.SendTo(msg,remoteEP);
-            if (message.Equals("quit"))
-            {
-                //if quit has been sent, do not try and read a response
-               // Disconnect(sender);
-
-            }
-            //else
-            //{
-            //    //If the command sent is not a disconnect command, read the servers Echo response
-            //    // Receive the response from the remote device.
-
-            //    int bytesRec = sender.Receive(bytes);
-            //    Console.WriteLine("Server response was: {0}",
-            //        Encoding.UTF8.GetString(bytes, 0, bytesRec));
-            //}
         }
 
         static void Main(string[] args)
@@ -77,9 +54,7 @@ namespace UDPClient
                     SendMessage(message);
 
                 }
-            }
-
-
+            }   
         }
     }
 }

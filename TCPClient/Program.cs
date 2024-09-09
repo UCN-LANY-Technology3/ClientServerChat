@@ -27,7 +27,7 @@ namespace Client
 
             IPAddress ipAddress = Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(x => x.AddressFamily == AddressFamily.InterNetwork).First();
             IPEndPoint remoteEP = new IPEndPoint(ipAddress, 1337);
-            // Create a TCP/IP  socket.
+            // Create a TCP socket.
             _sender = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             _sender.Connect(remoteEP);
             Console.WriteLine("Sending message\"{0}\" to: {1}", message, _sender.RemoteEndPoint.ToString());
@@ -43,7 +43,6 @@ namespace Client
                 byte[] msg = Encoding.UTF8.GetBytes(message);
                 int bytesSent = _sender.Send(msg);
             }
-            //_sender.Disconnect(true);
 
             if (message.Equals("quit"))
             {
